@@ -1,0 +1,58 @@
+.content{
+    background-color: aquamarine;
+    width: 98%;
+    height: 1000px;
+    display: flex;
+    margin: 0 auto;
+    position: fixed;
+    bottom: 0;
+    left: 0; /* Điều này đặt div ở góc dưới bên trái */
+}
+.content .line_content_chat{
+    width: 80%;
+    background-color: gray;
+    border-radius: 20px;
+    margin-right:  5px;
+    
+}
+.content .menu_friend{
+    width: 20%;
+    background-color: chartreuse;
+    border-radius: 20px;
+
+    border-left: 2px solid rgb(131, 131, 131);
+}
+.line_content_chat .name_friend{
+    width: 100%;
+    height: 5%;
+}
+.name_friend .information_user{
+    background-color: rgb(228, 228, 228);
+    margin:0 auto;
+    margin-top: 20px;
+    width: 80%;
+    height: 100px;
+    border-radius: 35px 0px;
+    display: flex;
+}
+.information_user .rounded-circle{
+    margin: 15px ;
+    margin-left: 50px;
+}
+.information_user .name_language{
+    margin: 15px ;
+    margin-left: 25px;
+}
+.name_language strong{
+    font-size: 20px;
+    text-transform: uppercase;
+}
+.line_content_chat .text_chat{
+    position: fixed;
+    bottom: 0;
+    left: 0; /* Điều này đặt div ở góc dưới bên trái */
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 100%;
+
+}
