@@ -216,7 +216,7 @@
                         </div>
                     </div> 
                     <div class="from">
-                        <form method="post" action="courses.php">
+                        <form method="post">
                               <label for="examplenameCourse" class="form-label ">Nhập mã khóa học</label>
                               <input type="text" class="form-control" id="examplenameCourse" aria-describedby="emailHelp" name="maLop">
                               <p><small><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dòng văn bản này được coi là bản in đẹp.</font></font></small></p>
@@ -246,11 +246,12 @@
                                 </div>
                               </fieldset>
                             <button type="submit" name="insert" class="btn btn-primary">Thêm </button>
+                            <button type="submit" name="delete" class="btn btn-primary">Xóa </button>
                         </form>
 
-                        <!-- insert new courses -->
+                        
                         <?php
-
+                          //insert new course
                           if (isset($_POST['insert'])) {
                                     
                             $maLop = $_POST['maLop'];
@@ -262,9 +263,11 @@
                               
                               $sqlCmm = "INSERT INTO class(id, tenLop, TenDu, QuanTam) VALUES ('$maLop', '$tenLop', '$tenLopD', '$QuanTam');";
                               mysqli_query($link, $sqlCmm) or die("Thất bại");
-
                             }
                           }
+
+                          //delete course
+
                         
                         ?>
                     </div>
@@ -342,10 +345,6 @@
                                   </td>
                                     ";
                                     break;
-                                  
-                                  default:
-                                    # code...
-                                    break;
                                 }
                                 
                                 echo"
@@ -353,7 +352,10 @@
                                     <a href='#'>
                                     </a>
                                       
-                                    <button type='button' class='btn btn-success'><i class='ti ti-edit-circle'></i></button>
+                                    <button type='button' onclick='
+                                      
+                                    ' 
+                                    class='btn btn-success'><i class='ti ti-edit-circle'></i></button>
                                   </td>
                                   <td>
         
@@ -381,6 +383,7 @@
   <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="../assets/js/dashboard.js"></script>
+
 </body>
 
 </html>
