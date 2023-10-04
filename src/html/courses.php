@@ -249,7 +249,7 @@
                             <button type="submit" name="delete" class="btn btn-primary">Xóa </button>
                         </form>
 
-                        
+                        <!-- vì một lý do nào đó vc mạng thay đổi kết nối mạng có ảnh hưởng tới vc load thêm và xóa dữ liệu??? và ko hiểu vì sao -->
                         <?php
                           //insert new course
                           if (isset($_POST['insert'])) {
@@ -262,7 +262,7 @@
                             $sqlCmm = "SELECT id FROM class where id = '" .$maLop ."';";  
                             $result = mysqli_query($link, $sqlCmm);
                             
-                            if (mysqli_num_rows($result) < 0) {
+                            if (mysqli_num_rows($result) == 0) {
                               if (!empty($maLop) && !empty($tenLop) && !empty($tenLopD)) {
                               
                                 $sqlCmm = "INSERT INTO class(id, tenLop, TenDu, QuanTam) VALUES ('$maLop', '$tenLop', '$tenLopD', '$QuanTam');";
@@ -402,6 +402,9 @@
   <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="../assets/js/dashboard.js"></script>
+  <script>
+    
+  </script>
 </body>
 
 </html>
