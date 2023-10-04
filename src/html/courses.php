@@ -259,15 +259,34 @@
                             $tenLopD = $_POST['tenLopD'];
                             $QuanTam = $_POST['QuanTam'];
 
-                            if (!empty($maLop) && !empty($tenLop) && !empty($tenLopD)) {
+                            $sqlCmm = "SELECT id FROM class where id = '" .$maLop ."';";  
+                            $result = mysqli_query($link, $sqlCmm);
+                            
+                            if (mysqli_num_rows($result) < 0) {
+                              if (!empty($maLop) && !empty($tenLop) && !empty($tenLopD)) {
                               
-                              $sqlCmm = "INSERT INTO class(id, tenLop, TenDu, QuanTam) VALUES ('$maLop', '$tenLop', '$tenLopD', '$QuanTam');";
-                              mysqli_query($link, $sqlCmm) or die("Thất bại");
+                                $sqlCmm = "INSERT INTO class(id, tenLop, TenDu, QuanTam) VALUES ('$maLop', '$tenLop', '$tenLopD', '$QuanTam');";
+                                mysqli_query($link, $sqlCmm) or die("Thất bại");
+  
+                              }
                             }
+                            
                           }
 
                           //delete course
+                          if (isset($_POST['delete'])) {
+                                    
+                            $maLop = $_POST['maLop'];
 
+                            $sqlCmm = "SELECT id FROM class where id = '" .$maLop ."';";  
+                            $result = mysqli_query($link, $sqlCmm);
+                            
+                            if (mysqli_num_rows($result) > 0) {
+                              $sqlCmm = "DELETE FROM class WHERE id = " .$maLop. "";
+                              mysqli_query($link, $sqlCmm) or die("Thất bại");
+                            }
+                            
+                          }
                         
                         ?>
                     </div>
@@ -383,7 +402,6 @@
   <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="../assets/js/dashboard.js"></script>
-
 </body>
 
 </html>
