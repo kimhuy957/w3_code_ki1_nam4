@@ -1,3 +1,9 @@
+<!-- load data -->
+<?php
+    $link = new mysqli('localhost', 'root', '', 'btlcnpm');
+ 
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -38,6 +44,14 @@
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
                 <span class="hide-menu">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./courses.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">courses management</span>
               </a>
             </li>
             <li class="nav-small-cap">
@@ -202,36 +216,57 @@
                         </div>
                     </div> 
                     <div class="from">
-                        <form>
-                              <label for="examplenameCourse" class="form-label ">Nhập tên khóa học</label>
-                              <input type="text" class="form-control" id="examplenameCourse" aria-describedby="emailHelp">
+                        <form method="post" action="courses.php">
+                              <label for="examplenameCourse" class="form-label ">Nhập mã khóa học</label>
+                              <input type="text" class="form-control" id="examplenameCourse" aria-describedby="emailHelp" name="maLop">
                               <p><small><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dòng văn bản này được coi là bản in đẹp.</font></font></small></p>
                               <div class="row d-flex">
                                 <div class="col-lg-6 ">
                                   <label for="exampleNickCourse" class="form-label ">Nhập tên viết tắt khóa học</label>
-                                  <input type="text" class="form-control" id="exampleNickCourse" aria-describedby="emailHelp">
+                                  <input type="text" class="form-control" id="exampleNickCourse" aria-describedby="emailHelp" name="tenLop">
                                   <p><small><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dòng văn bản này được coi là bản in đẹp.</font></font></small></p>
                                 </div>
                                 <div class="col-lg-6">
-                                  <label for="exampleBuyCourse" class="form-label ">Nhập tên khóa học</label>
+                                  <label for="exampleBuyCourse" class="form-label ">Nhập tên đầy đủ khóa học</label>
                                   <div class="d-flex">
-                                    <input type="number" class="form-control" id="exampleBuyCourse" aria-describedby="emailHelp">
-                                    <span class="input-group-text">$</span>
+                                    <input type="text" class="form-control" id="exampleBuyCourse" aria-describedby="emailHelp" name="tenLopD">
                                   </div>
                                     <p><small><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dòng văn bản này được coi là bản in đẹp.</font></font></small></p>
                                 </div>
                               </div>
-                              <fieldset disabled>
+                              <fieldset>
 
                                 <div class="mb-3">
-                                  <label for="disabledSelect" class="form-label">Disabled select menu</label>
-                                  <select id="disabledSelect" class="form-select">
-                                    <option>Disabled select</option>
+                                  <label for="disabledSelect" class="form-label">Mức độ quan tâm</label>
+                                  <select id="disabledSelect" class="form-select" name="QuanTam">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
                                   </select>
                                 </div>
                               </fieldset>
-                            <button type="submit" class="btn btn-primary">Thêm </button>
+                            <button type="submit" name="insert" class="btn btn-primary">Thêm </button>
                         </form>
+
+                        <!-- insert new courses -->
+                        <?php
+
+                          if (isset($_POST['insert'])) {
+                                    
+                            $maLop = $_POST['maLop'];
+                            $tenLop = $_POST['tenLop'];
+                            $tenLopD = $_POST['tenLopD'];
+                            $QuanTam = $_POST['QuanTam'];
+
+                            if (!empty($maLop) && !empty($tenLop) && !empty($tenLopD)) {
+                              
+                              $sqlCmm = "INSERT INTO class(id, tenLop, TenDu, QuanTam) VALUES ('$maLop', '$tenLop', '$tenLopD', '$QuanTam');";
+                              mysqli_query($link, $sqlCmm) or die("Thất bại");
+
+                            }
+                          }
+                        
+                        ?>
                     </div>
                   </div>
                 </div>
@@ -260,79 +295,74 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">1</h6></td>
-                        <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">PHP</h6>
-                            <span class="fw-normal">Hypertext PreprocessorDesigner</span>                          
-                        </td>
-                        <td class="border-bottom-0">
-                          <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-primary rounded-3 fw-semibold">Low</span>
-                          </div>
-                        </td>
-                        <td class="border-bottom-0">
-                          <a href="#">
-                          </a>
-                            
-                          <button type="button" class="btn btn-success"><i class="ti ti-edit-circle"></i></button>
-                        </td>
-                        <td>
+                      <!-- Show all exsited courses -->
+                      <?php
 
-                        </td>
-                      </tr> 
-                      <tr>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">2</h6></td>
-                        <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Andrew McDownland</h6>
-                            <span class="fw-normal">Project Manager</span>                          
-                        </td>
-                        <td class="border-bottom-0">
-                          <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-secondary rounded-3 fw-semibold">Medium</span>
-                          </div>
-                        </td>
-                        <td class="border-bottom-0">
-                          <a href="#">
-                          </a>
-                            
-                          <button type="button" class="btn btn-success"><i class="ti ti-edit-circle"></i></button>
-                        </td>
-                      </tr> 
-                      <tr>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">3</h6></td>
-                        <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Christopher Jamil</h6>
-                            <span class="fw-normal">Project Manager</span>                          
-                        </td>
-                        <td class="border-bottom-0">
-                          <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-danger rounded-3 fw-semibold">High</span>
-                          </div>
-                        </td>
-                        <td class="border-bottom-0">
-                          <a href="#">
-                          <button type="button" class="btn btn-success"><i class="ti ti-edit-circle"></i></button>
-                          </a>
-                        </td>
-                      </tr>      
-                      <tr>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">4</h6></td>
-                        <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Nirav Joshi</h6>
-                            <span class="fw-normal">Frontend Engineer</span>                          
-                        </td>
-                        <td class="border-bottom-0">
-                          <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-success rounded-3 fw-semibold">Critical</span>
-                          </div>
-                        </td>
-                        <td class="border-bottom-0">
-                          <a href="#">
-                          <button type="button" class="btn btn-success"><i class="ti ti-edit-circle"></i></button>
-                          </a>
-                        </td>
-                      </tr>                       
+                        $sqlCmm = "SELECT id, tenLop, TenDu, QuanTam FROM class;";  
+                        $result = mysqli_query($link, $sqlCmm);
+
+                        if (mysqli_num_rows($result) > 0) {
+                          while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>
+                                <td class='border-bottom-0'><h6 class='fw-semibold mb-0'>" .$row['id'] ."</h6></td>
+                                <td class='border-bottom-0'>
+                                    <h6 class='fw-semibold mb-1'>" .$row['tenLop'] ."</h6>
+                                    <span class='fw-normal'>" .$row['TenDu'] ."</span>                          
+                                </td>";
+                            switch ($row['QuanTam']){
+                                  case '1':
+                                    echo "
+                                      <td class='border-bottom-0'>
+                                        <div class='d-flex align-items-center gap-2'>
+                                          <span class='badge bg-primary rounded-3 fw-semibold'>Low</span>
+                                        </div>
+                                      </td> 
+                                    ";
+                                  
+                                    break;
+
+                                  case '2':
+                                      echo "
+                                        
+                                        <td class='border-bottom-0'>
+                                        <div class='d-flex align-items-center gap-2'>
+                                          <span class='badge bg-danger rounded-3 fw-semibold'>High</span>
+                                        </div>
+                                      </td>
+                                      ";
+                                    
+                                      break;
+
+                                  case '3':
+                                    echo "
+                                    <td class='border-bottom-0'>
+                                    <div class='d-flex align-items-center gap-2'>
+                                      <span class='badge bg-success rounded-3 fw-semibold'>Critical</span>
+                                    </div>
+                                  </td>
+                                    ";
+                                    break;
+                                  
+                                  default:
+                                    # code...
+                                    break;
+                                }
+                                
+                                echo"
+                                    <td class='border-bottom-0'>
+                                    <a href='#'>
+                                    </a>
+                                      
+                                    <button type='button' class='btn btn-success'><i class='ti ti-edit-circle'></i></button>
+                                  </td>
+                                  <td>
+        
+                                  </td>
+                                </tr> 
+                                ";
+                            }};
+
+                      ?>
                     </tbody>
                   </table>
                 </div>
