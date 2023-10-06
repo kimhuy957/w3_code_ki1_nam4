@@ -218,18 +218,18 @@
                     <div class="from">
                         <form method="post">
                               <label for="examplenameCourse" class="form-label ">Nhập mã khóa học</label>
-                              <input type="text" class="form-control" id="examplenameCourse" aria-describedby="emailHelp" name="maLop">
+                              <input type="text" class="form-control" aria-describedby="emailHelp" name="maLop" id="id" readonly>
                               <p><small><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dòng văn bản này được coi là bản in đẹp.</font></font></small></p>
                               <div class="row d-flex">
                                 <div class="col-lg-6 ">
                                   <label for="exampleNickCourse" class="form-label ">Nhập tên viết tắt khóa học</label>
-                                  <input type="text" class="form-control" id="exampleNickCourse" aria-describedby="emailHelp" name="tenLop">
+                                  <input type="text" class="form-control" aria-describedby="emailHelp" name="tenLop" id="ten">
                                   <p><small><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dòng văn bản này được coi là bản in đẹp.</font></font></small></p>
                                 </div>
                                 <div class="col-lg-6">
                                   <label for="exampleBuyCourse" class="form-label ">Nhập tên đầy đủ khóa học</label>
                                   <div class="d-flex">
-                                    <input type="text" class="form-control" id="exampleBuyCourse" aria-describedby="emailHelp" name="tenLopD">
+                                    <input type="text" class="form-control" aria-describedby="emailHelp" name="tenLopD" id="tenDu">
                                   </div>
                                     <p><small><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dòng văn bản này được coi là bản in đẹp.</font></font></small></p>
                                 </div>
@@ -238,10 +238,10 @@
 
                                 <div class="mb-3">
                                   <label for="disabledSelect" class="form-label">Mức độ quan tâm</label>
-                                  <select id="disabledSelect" class="form-select" name="QuanTam">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                  <select class="form-select" name="QuanTam" id="qT">
+                                    <option value="1">1</option>
+                                    <option value= "2">2</option>
+                                    <option value="3">3</option>
                                   </select>
                                 </div>
                               </fieldset>
@@ -249,9 +249,9 @@
                             <button type="submit" name="delete" class="btn btn-primary">Xóa </button>
                         </form>
 
-                        <!-- vì một lý do nào đó vc mạng thay đổi kết nối mạng có ảnh hưởng tới vc load thêm và xóa dữ liệu??? và ko hiểu vì sao -->
+                        
                         <?php
-                          //insert new course
+                          //insert new course and update
                           if (isset($_POST['insert'])) {
                                     
                             $maLop = $_POST['maLop'];
@@ -262,13 +262,17 @@
                             $sqlCmm = "SELECT id FROM class where id = '" .$maLop ."';";  
                             $result = mysqli_query($link, $sqlCmm);
                             
-                            if (mysqli_num_rows($result) == 0) {
-                              if (!empty($maLop) && !empty($tenLop) && !empty($tenLopD)) {
+                            if (mysqli_num_rows($result) == 0 || empty($maLop)) {
+                              if (!empty($tenLop) && !empty($tenLopD)) {
                               
-                                $sqlCmm = "INSERT INTO class(id, tenLop, TenDu, QuanTam) VALUES ('$maLop', '$tenLop', '$tenLopD', '$QuanTam');";
+                                $sqlCmm = "INSERT INTO class(tenLop, TenDu, QuanTam) VALUES ('$tenLop', '$tenLopD', '$QuanTam');";
                                 mysqli_query($link, $sqlCmm) or die("Thất bại");
   
                               }
+                            }
+                            else {
+                              $sqlCmm = "UPDATE class SET tenLop='" .$tenLop ."', TenDu='" .$tenLopD ."', QuanTam='" .$QuanTam ."' WHERE id = " .$maLop .";";
+                                mysqli_query($link, $sqlCmm) or die("Thất bại");
                             }
                             
                           }
@@ -372,8 +376,8 @@
                                     </a>
                                       
                                     <button type='button' onclick='
-                                      
-                                    ' 
+                                      change(".$row['id'] .", \"".$row['tenLop'] ."\", \"".$row['TenDu'] ."\", ".$row['QuanTam'] .") 
+                                      '
                                     class='btn btn-success'><i class='ti ti-edit-circle'></i></button>
                                   </td>
                                   <td>
@@ -402,8 +406,37 @@
   <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="../assets/js/dashboard.js"></script>
+  <!-- edit button onclick listener -->
   <script>
-    
+    function change(id, Ten, TenDu, QuanTam) {
+      const maLop = document.getElementById('id');
+      const tenLop =document.getElementById('ten');
+      const tenLopD =document.getElementById('tenDu');
+      const QT =document.getElementById('qT');
+
+      if (typeof QT == 'undefined' || QT == null) {
+        console.log("loi QT");
+      }
+
+      maLop.value = id;
+      tenLop.value = Ten;
+      tenLopD.value = TenDu;
+      
+      switch (QuanTam) {
+        case 1:
+          QT.value = "1";
+          break;
+      
+        case 2:
+          QT.value = "2";
+          break;
+          
+        case 3:
+          QT.value = "3";
+          break;
+      }
+
+    }
   </script>
 </body>
 
