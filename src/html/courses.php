@@ -154,7 +154,7 @@
                                   </select>
                                 </div>
                               </fieldset>
-                            <button type="submit" name="insert" class="btn btn-primary">Thêm </button>
+                            <button type="submit" name="insert" class="btn btn-primary me-xl-9">Thêm </button>
                             <button type="submit" name="delete" class="btn btn-primary">Xóa </button>
                         </form>
 
@@ -290,7 +290,8 @@
                                     class='btn btn-success'><i class='ti ti-edit-circle'></i></button>
                                   </td>
                                   <td>
-        
+                                      <button type='button' 
+                                    class='btn btn-warning'><i class='ti ti-list-details'></i></button>
                                   </td>
                                 </tr> 
                                 ";
